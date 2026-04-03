@@ -3,8 +3,8 @@ name: Deploy Prototype to GitHub Pages
 on:
   push:
     branches:
-      - master
       - freight-contract-generator
+      - master
   workflow_dispatch:
 
 permissions:
@@ -30,11 +30,11 @@ jobs:
       - name: Build static web app
         run: npm run build --workspace=apps/web -- --configuration production --output-mode static --base-href /
 
-      - name: Deploy to main branch (GitHub Pages)
+      - name: Deploy to gh-pages branch (GitHub Pages)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: main
+          publish_branch: gh-pages
           publish_dir: ./apps/web/dist/web/browser
           force_orphan: true
           enable_jekyll: false
