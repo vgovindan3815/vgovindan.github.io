@@ -1,0 +1,16 @@
+{
+  "name": "freight-contract-generator",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "apps/worker"
+  ],
+  "scripts": {
+    "api": "npm run dev --workspace=apps/api",
+    "worker": "npm run dev --workspace=apps/worker",
+    "web": "npm run start --workspace=apps/web",
+    "install:all": "npm install"
+  }
+}

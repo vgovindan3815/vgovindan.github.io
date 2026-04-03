@@ -1,0 +1,53 @@
+<div class="login-page">
+  <section class="login-layout">
+    <div class="login-intro">
+      <div class="eyebrow">Freight Operations Access</div>
+      <h1>Sign in to the freight contract workspace.</h1>
+      <p>
+        Use one of the seeded local accounts to access the dashboard, manual processing, batch processing,
+        and the admin console.
+      </p>
+
+      <div class="credential-cards">
+        <button type="button" class="credential-card" (click)="useDemoAccount('Admin', 'Admin@123')">
+          <strong>Admin</strong>
+          <span>Username: Admin</span>
+          <span>Password: Admin@123</span>
+        </button>
+        <button type="button" class="credential-card" (click)="useDemoAccount('freight_user', 'Freight@123')">
+          <strong>freight_user</strong>
+          <span>Username: freight_user</span>
+          <span>Password: Freight@123</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="login-card">
+      <div class="login-card__header">
+        <mat-icon>lock</mat-icon>
+        <div>
+          <h2>Login</h2>
+          <p>Enter your local user credentials.</p>
+        </div>
+      </div>
+
+      <form class="login-form" (ngSubmit)="login()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="username" name="username" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [(ngModel)]="password" name="password" required>
+        </mat-form-field>
+
+        @if (errorMessage) {
+          <div class="error-box">{{ errorMessage }}</div>
+        }
+
+        <button mat-raised-button type="submit" class="login-button">Access Workspace</button>
+      </form>
+    </div>
+  </section>
+</div>

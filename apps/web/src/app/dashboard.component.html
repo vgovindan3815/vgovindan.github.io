@@ -1,0 +1,85 @@
+<div class="landing-shell">
+  <section class="hero-card">
+    <div class="hero-copy">
+      <div class="eyebrow">Freight And Logistics Operations</div>
+      <h1>Contract generation designed for a modern carrier operations team.</h1>
+      <p>
+        Prepare freight pricing contracts with clear routing, batch automation, and strong operational visibility.
+      </p>
+
+      <div class="hero-actions">
+        <a mat-raised-button routerLink="/manual" class="cta-primary action-button">
+          <span class="action-button__icon-wrap">
+            <mat-icon>description</mat-icon>
+          </span>
+          <span class="action-button__text">
+            <strong>Manual Processing</strong>
+            <small>Single contract workflow</small>
+          </span>
+        </a>
+        <a mat-stroked-button routerLink="/batch" class="cta-secondary action-button">
+          <span class="action-button__icon-wrap">
+            <mat-icon>playlist_add_check</mat-icon>
+          </span>
+          <span class="action-button__text">
+            <strong>Batch Processing</strong>
+            <small>High-volume job lane</small>
+          </span>
+        </a>
+        @if (isAdmin) {
+          <a mat-stroked-button routerLink="/admin" class="cta-secondary action-button">
+            <span class="action-button__icon-wrap">
+              <mat-icon>admin_panel_settings</mat-icon>
+            </span>
+            <span class="action-button__text">
+              <strong>Admin Console</strong>
+              <small>Manage local access and user status</small>
+            </span>
+          </a>
+        }
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="panel-badge">Operations Control Center</div>
+      <div class="lane-grid">
+        <div class="lane-card">
+          <span class="lane-label">Manual Lane</span>
+          <strong>Single shipment contract preparation</strong>
+          <p>Upload, validate, select destination folder, and generate one contract with controlled review.</p>
+        </div>
+        <div class="lane-card lane-card--accent">
+          <span class="lane-label">Batch Lane</span>
+          <strong>Folder-driven throughput</strong>
+          <p>Choose source and output folders, queue multiple workbooks, export results, and retry failures.</p>
+        </div>
+        @if (isAdmin) {
+          <div class="lane-card">
+            <span class="lane-label">Admin Lane</span>
+            <strong>Role-based local access</strong>
+            <p>Review the Admin and freight_user accounts, update status, and track last login activity.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-strip">
+    <div class="feature-item">
+      <mat-icon>local_shipping</mat-icon>
+      <span>Carrier-grade workflow</span>
+    </div>
+    <div class="feature-item">
+      <mat-icon>route</mat-icon>
+      <span>Clear manual or batch routing</span>
+    </div>
+    <div class="feature-item">
+      <mat-icon>fact_check</mat-icon>
+      <span>Validation before generation</span>
+    </div>
+    <div class="feature-item">
+      <mat-icon>shield</mat-icon>
+      <span>Role-based local access control</span>
+    </div>
+  </section>
+</div>

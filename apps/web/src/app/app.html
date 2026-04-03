@@ -1,0 +1,26 @@
+@if (auth.isAuthenticated()) {
+	<header class="app-header">
+		<div class="app-header__brand">
+			<div class="app-header__eyebrow">Operations Console</div>
+			<h1>Freight Contract Generator</h1>
+		</div>
+
+		<nav class="app-nav">
+			<a routerLink="/home" routerLinkActive="is-active" class="nav-link">Home</a>
+			<a routerLink="/manual" routerLinkActive="is-active" class="nav-link">Manual</a>
+			<a routerLink="/batch" routerLinkActive="is-active" class="nav-link">Batch</a>
+			@if (auth.hasAnyRole(['ADMIN'])) {
+				<a routerLink="/admin" routerLinkActive="is-active" class="nav-link">Admin</a>
+			}
+
+			<span class="nav-user">{{ auth.user?.displayName }} · {{ auth.user?.roles?.[0] }}</span>
+			<button type="button" class="nav-link nav-link--button" (click)="logout()">Logout</button>
+		</nav>
+	</header>
+
+	<div class="app-banner" aria-hidden="true"></div>
+}
+
+<main class="app-main" [class.app-main--login]="!auth.isAuthenticated()">
+	<router-outlet />
+</main>

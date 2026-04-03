@@ -1,0 +1,365 @@
+{
+  "schemaVersion": "1.0",
+  "generatedOn": "2026-04-02",
+  "description": "JSON mapping for consuming Freight Pricing Excel templates into Word contract. Includes placeholder replacement + full-table appendices.",
+  "templates": [
+    {
+      "templateId": "FREIGHT_PRICING_ZONE",
+      "pricingModel": "Zone-based",
+      "detection": {
+        "primary": {
+          "sheet": "_Meta",
+          "key": "TemplateID",
+          "expected": "FREIGHT_PRICING_ZONE"
+        },
+        "secondary": {
+          "sheet": "0_ReadMe",
+          "cell": "B4",
+          "expected": "Zone-based"
+        },
+        "tertiary": {
+          "sheet": "1_Customer_Profile",
+          "field": "Pricing Model",
+          "expected": "Zone-based"
+        }
+      },
+      "artifacts": {
+        "excel": "Freight_Pricing_Contract_Template_ZONE.xlsx",
+        "contract": "Freight_Logistics_Contract_ZONE_AllTables.docx"
+      },
+      "placeholders": {
+        "{{PricingModel}}": {
+          "preferred": {
+            "sheet": "0_ReadMe",
+            "cell": "B4"
+          },
+          "fallback": {
+            "sheet": "1_Customer_Profile",
+            "field": "Pricing Model"
+          }
+        },
+        "{{CustomerName}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Legal Name"
+        },
+        "{{CustomerAddress}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Address"
+        },
+        "{{CustomerContact}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Primary Contact"
+        },
+        "{{CustomerEmail}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Contact Email"
+        },
+        "{{ProviderName}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Legal Name"
+        },
+        "{{ProviderAddress}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Address"
+        },
+        "{{ProviderContact}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Primary Contact"
+        },
+        "{{ProviderEmail}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Contact Email"
+        },
+        "{{StartDate}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Contract Effective Start Date"
+        },
+        "{{EndDate}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Contract Effective End Date"
+        },
+        "{{ContractDate}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Contract Signature Date"
+        },
+        "{{GoverningLaw}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Governing Law / Jurisdiction"
+        },
+        "{{Currency}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Billing Currency"
+        },
+        "{{PaymentTerms}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Payment Terms"
+        }
+      },
+      "tables": [
+        {
+          "name": "Workbook_Selection",
+          "sheet": "0_ReadMe",
+          "cells": [
+            "B4",
+            "B12"
+          ],
+          "contractSection": "Appendix 0"
+        },
+        {
+          "name": "Customer_Profile",
+          "sheet": "1_Customer_Profile",
+          "headerRow": 1,
+          "contractSection": "Appendix 1"
+        },
+        {
+          "name": "Locations_Master",
+          "sheet": "2_Lanes_Locations",
+          "detectHeaders": [
+            "Location ID",
+            "Location Name"
+          ],
+          "tableDelimiter": {
+            "emptyLine": true,
+            "newHeader": true
+          },
+          "contractSection": "Appendix 2A"
+        },
+        {
+          "name": "Lanes_Pricing_Keys",
+          "sheet": "2_Lanes_Locations",
+          "detectHeaders": [
+            "Lane ID",
+            "Origin Location ID",
+            "Destination Location ID"
+          ],
+          "tableDelimiter": {
+            "emptyLine": true,
+            "newHeader": true
+          },
+          "contractSection": "Appendix 2B"
+        },
+        {
+          "name": "Pricing_Parcel",
+          "sheet": "3_Pricing_Parcel",
+          "headerRow": 1,
+          "contractSection": "Appendix 3"
+        },
+        {
+          "name": "Pricing_FTL_LTL",
+          "sheet": "4_Pricing_FTL_LTL",
+          "headerRow": 1,
+          "contractSection": "Appendix 4"
+        },
+        {
+          "name": "Surcharges_Fees",
+          "sheet": "5_Surcharges_Fees",
+          "headerRow": 1,
+          "contractSection": "Appendix 5"
+        },
+        {
+          "name": "Service_Levels_SLA",
+          "sheet": "6_Service_Levels_SLA",
+          "headerRow": 1,
+          "contractSection": "Appendix 6"
+        },
+        {
+          "name": "Accessorials",
+          "sheet": "7_Accessorials",
+          "headerRow": 1,
+          "contractSection": "Appendix 7"
+        },
+        {
+          "name": "Terms_Compliance",
+          "sheet": "8_Terms_Compliance",
+          "headerRow": 1,
+          "contractSection": "Appendix 8"
+        },
+        {
+          "name": "Field_Map",
+          "sheet": "9_Field_Map",
+          "headerRow": 1,
+          "contractSection": "Appendix 9"
+        }
+      ]
+    },
+    {
+      "templateId": "FREIGHT_PRICING_MILEAGE",
+      "pricingModel": "Mileage-based",
+      "detection": {
+        "primary": {
+          "sheet": "_Meta",
+          "key": "TemplateID",
+          "expected": "FREIGHT_PRICING_MILEAGE"
+        },
+        "secondary": {
+          "sheet": "0_ReadMe",
+          "cell": "B4",
+          "expected": "Mileage-based"
+        },
+        "tertiary": {
+          "sheet": "1_Customer_Profile",
+          "field": "Pricing Model",
+          "expected": "Mileage-based"
+        }
+      },
+      "artifacts": {
+        "excel": "Freight_Pricing_Contract_Template_MILEAGE.xlsx",
+        "contract": "Freight_Logistics_Contract_MILEAGE_AllTables.docx"
+      },
+      "placeholders": {
+        "{{PricingModel}}": {
+          "preferred": {
+            "sheet": "0_ReadMe",
+            "cell": "B4"
+          },
+          "fallback": {
+            "sheet": "1_Customer_Profile",
+            "field": "Pricing Model"
+          }
+        },
+        "{{CustomerName}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Legal Name"
+        },
+        "{{CustomerAddress}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Address"
+        },
+        "{{CustomerContact}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Primary Contact"
+        },
+        "{{CustomerEmail}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Customer Contact Email"
+        },
+        "{{ProviderName}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Legal Name"
+        },
+        "{{ProviderAddress}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Address"
+        },
+        "{{ProviderContact}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Primary Contact"
+        },
+        "{{ProviderEmail}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Provider Contact Email"
+        },
+        "{{StartDate}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Contract Effective Start Date"
+        },
+        "{{EndDate}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Contract Effective End Date"
+        },
+        "{{ContractDate}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Contract Signature Date"
+        },
+        "{{GoverningLaw}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Governing Law / Jurisdiction"
+        },
+        "{{Currency}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Billing Currency"
+        },
+        "{{PaymentTerms}}": {
+          "sheet": "1_Customer_Profile",
+          "field": "Payment Terms"
+        }
+      },
+      "tables": [
+        {
+          "name": "Workbook_Selection",
+          "sheet": "0_ReadMe",
+          "cells": [
+            "B4",
+            "B12"
+          ],
+          "contractSection": "Appendix 0"
+        },
+        {
+          "name": "Customer_Profile",
+          "sheet": "1_Customer_Profile",
+          "headerRow": 1,
+          "contractSection": "Appendix 1"
+        },
+        {
+          "name": "Locations_Master",
+          "sheet": "2_Lanes_Locations",
+          "detectHeaders": [
+            "Location ID",
+            "Location Name"
+          ],
+          "tableDelimiter": {
+            "emptyLine": true,
+            "newHeader": true
+          },
+          "contractSection": "Appendix 2A"
+        },
+        {
+          "name": "Lanes_Pricing_Keys",
+          "sheet": "2_Lanes_Locations",
+          "detectHeaders": [
+            "Lane ID",
+            "Origin Location ID",
+            "Destination Location ID"
+          ],
+          "tableDelimiter": {
+            "emptyLine": true,
+            "newHeader": true
+          },
+          "contractSection": "Appendix 2B"
+        },
+        {
+          "name": "Pricing_Parcel",
+          "sheet": "3_Pricing_Parcel",
+          "headerRow": 1,
+          "contractSection": "Appendix 3"
+        },
+        {
+          "name": "Pricing_FTL_LTL",
+          "sheet": "4_Pricing_FTL_LTL",
+          "headerRow": 1,
+          "contractSection": "Appendix 4"
+        },
+        {
+          "name": "Surcharges_Fees",
+          "sheet": "5_Surcharges_Fees",
+          "headerRow": 1,
+          "contractSection": "Appendix 5"
+        },
+        {
+          "name": "Service_Levels_SLA",
+          "sheet": "6_Service_Levels_SLA",
+          "headerRow": 1,
+          "contractSection": "Appendix 6"
+        },
+        {
+          "name": "Accessorials",
+          "sheet": "7_Accessorials",
+          "headerRow": 1,
+          "contractSection": "Appendix 7"
+        },
+        {
+          "name": "Terms_Compliance",
+          "sheet": "8_Terms_Compliance",
+          "headerRow": 1,
+          "contractSection": "Appendix 8"
+        },
+        {
+          "name": "Field_Map",
+          "sheet": "9_Field_Map",
+          "headerRow": 1,
+          "contractSection": "Appendix 9"
+        }
+      ]
+    }
+  ]
+}

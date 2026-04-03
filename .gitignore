@@ -1,0 +1,23 @@
+# Node dependencies
+node_modules/
+
+# Build and generated artifacts
+dist/
+.angular/
+output/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Environment files
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

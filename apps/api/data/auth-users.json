@@ -1,0 +1,70 @@
+[
+  {
+    "id": "user-admin",
+    "username": "Admin",
+    "displayName": "Admin",
+    "password": "Admin@123",
+    "roles": [
+      "ADMIN"
+    ],
+    "status": "ACTIVE",
+    "createdAt": "2026-04-03T00:00:00.000Z",
+    "lastLoginAt": "2026-04-03T18:48:22.193Z"
+  },
+  {
+    "id": "user-freight",
+    "username": "freight_user",
+    "displayName": "Freight User",
+    "password": "Freight@123",
+    "roles": [
+      "FREIGHT_USER"
+    ],
+    "status": "ACTIVE",
+    "createdAt": "2026-04-03T00:00:00.000Z",
+    "lastLoginAt": "2026-04-03T19:05:53.891Z"
+  },
+  {
+    "id": "ec7e5534-0ead-4684-88f8-9d32b0897e7c",
+    "username": "test_user_1775239788",
+    "displayName": "Test User",
+    "password": "Temp@123",
+    "roles": [
+      "FREIGHT_USER"
+    ],
+    "status": "ACTIVE",
+    "createdAt": "2026-04-03T18:09:48.711Z"
+  },
+  {
+    "id": "2e7e1257-3c55-434c-a812-d0db9bea0005",
+    "username": "smoke_1775239953",
+    "displayName": "Smoke Test",
+    "password": "Smoke@123",
+    "roles": [
+      "FREIGHT_USER"
+    ],
+    "status": "ACTIVE",
+    "createdAt": "2026-04-03T18:12:33.565Z"
+  },
+  {
+    "id": "7aa6e634-79a4-4612-a0a1-6928bfa6331d",
+    "username": "smoke_1775239991",
+    "displayName": "Smoke",
+    "password": "Smoke@123",
+    "roles": [
+      "FREIGHT_USER"
+    ],
+    "status": "ACTIVE",
+    "createdAt": "2026-04-03T18:13:11.490Z"
+  },
+  {
+    "id": "2253e2e4-54bd-4b6a-8f33-52fa4f113c47",
+    "username": "smoke_1775240007",
+    "displayName": "Smoke",
+    "password": "Smoke@123",
+    "roles": [
+      "FREIGHT_USER"
+    ],
+    "status": "ACTIVE",
+    "createdAt": "2026-04-03T18:13:28.060Z"
+  }
+]

@@ -1,0 +1,130 @@
+<div class="batch-page-shell">
+  <section class="page-hero page-hero--batch">
+    <div class="page-hero__copy">
+      <div class="page-kicker">Batch Operations</div>
+      <h1>Run high-volume freight contract jobs with operational visibility.</h1>
+      <p>Choose input and output folders, submit multiple workbooks in one run, export outcomes, and retry failed files without leaving the lane.</p>
+    </div>
+    <div class="page-hero__nav">
+      <a mat-stroked-button routerLink="/home" class="hero-nav-button">
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      <a mat-stroked-button routerLink="/manual" class="hero-nav-button hero-nav-button--accent">
+        <mat-icon>description</mat-icon>
+        Manual Processing
+      </a>
+    </div>
+  </section>
+
+  <div class="batch-page">
+    <header class="batch-header">
+      <div>
+        <h1>Submit Batch Job</h1>
+        <p class="intro">Choose source and destination folders, then queue all eligible Excel files for generation.</p>
+      </div>
+    </header>
+
+    <section class="batch-card batch-card--primary">
+    <div class="form-grid">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Input folder (server path)</mat-label>
+        <input matInput [(ngModel)]="inputDir" placeholder="C:\\Data\\Input" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Output folder (server path)</mat-label>
+        <input matInput [(ngModel)]="outputDir" placeholder="C:\\Data\\Output" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Pricing model mode</mat-label>
+        <select matNativeControl [(ngModel)]="pricingModel">
+          <option value="Auto">Auto detect per workbook</option>
+          <option value="Zone-based">Zone-based for all files</option>
+          <option value="Mileage-based">Mileage-based for all files</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <div class="browse-actions">
+      <button mat-stroked-button type="button" (click)="openFolderBrowser('input')" [disabled]="browsing">
+        <mat-icon>folder_open</mat-icon>
+        Browse Input Folder
+      </button>
+      <button mat-stroked-button type="button" (click)="openFolderBrowser('output')" [disabled]="browsing">
+        <mat-icon>folder</mat-icon>
+        Browse Output Folder
+      </button>
+      @if (browsing) {
+        <span class="muted">Opening folder browser...</span>
+      }
+    </div>
+
+    <div class="actions-row">
+      <button mat-raised-button color="primary" [disabled]="!canSubmit" (click)="runBatch()">
+        <mat-icon>play_arrow</mat-icon>
+        {{ submitting ? 'Submitting...' : 'Run Batch' }}
+      </button>
+      <a href="/apps/freight/batch">Refresh Batch Page</a>
+    </div>
+
+    @if (error) {
+      <div class="error-box">
+        <mat-icon>error</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+    }
+    </section>
+
+    @if (batchStatus) {
+      <section class="batch-card batch-card--results">
+      <div class="summary-row">
+        <div><strong>Batch ID:</strong> {{ batchStatus.batchId }}</div>
+        <div><strong>Status:</strong> {{ batchStatus.status }}</div>
+      </div>
+
+      <div class="actions-row">
+        <button mat-stroked-button type="button" (click)="exportBatchCsv()">
+          <mat-icon>download</mat-icon>
+          Export CSV
+        </button>
+        <button mat-stroked-button type="button" [disabled]="!hasFailedItems || submitting" (click)="retryFailedFiles()">
+          <mat-icon>refresh</mat-icon>
+          Retry Failed Files
+        </button>
+      </div>
+
+      <mat-progress-bar
+        mode="determinate"
+        [value]="batchStatus.total ? ((batchStatus.completed + batchStatus.failed) / batchStatus.total) * 100 : 0">
+      </mat-progress-bar>
+
+      <div class="counts">
+        <span>Total: {{ batchStatus.total }}</span>
+        <span>Completed: {{ batchStatus.completed }}</span>
+        <span>Failed: {{ batchStatus.failed }}</span>
+        <span>Processing: {{ batchStatus.processing }}</span>
+        <span>Queued: {{ batchStatus.queued }}</span>
+      </div>
+
+      <div class="items">
+        <div class="item item-head">
+          <span>Source File</span>
+          <span>Status</span>
+          <span>Progress</span>
+          <span>Message</span>
+        </div>
+        @for (item of batchStatus.items; track item.requestId) {
+          <div class="item">
+            <span>{{ item.sourceFile || item.requestId }}</span>
+            <span>{{ item.status }}</span>
+            <span>{{ item.progress }}%</span>
+            <span>{{ item.message || '-' }}</span>
+          </div>
+        }
+      </div>
+      </section>
+    }
+  </div>
+</div>

@@ -1,0 +1,244 @@
+<div class="ops-page-shell">
+  <section class="page-hero page-hero--manual">
+    <div class="page-hero__copy">
+      <div class="page-kicker">Manual Contract Workflow</div>
+      <h1>Single-file freight contract preparation with review-ready controls.</h1>
+      <p>Upload one workbook, validate it, choose a destination folder, and generate the contract with direct operator feedback.</p>
+    </div>
+    <div class="page-hero__nav">
+      <a mat-stroked-button routerLink="/home" class="hero-nav-button">
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      <a mat-stroked-button routerLink="/batch" class="hero-nav-button hero-nav-button--accent">
+        <mat-icon>playlist_add_check</mat-icon>
+        Batch Processing
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header class="glass-header ops-header">
+    <div class="header-brand">
+      <mat-icon class="brand-icon">local_shipping</mat-icon>
+      <div>
+        <div class="brand-eyebrow">Operations Console</div>
+        <span class="brand-name">Freight Contract Generator</span>
+      </div>
+    </div>
+    @if (signedInUser) {
+      <div class="header-user">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ signedInUser }}</span>
+        <button mat-icon-button (click)="logout()" matTooltip="Sign out">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    }
+  </header>
+
+  <!-- ── Main card ────────────────────────────────────────────────────────── -->
+  <main class="glass-card ops-card">
+
+    <!-- Step 1: Pricing Model -->
+    <section class="form-section form-section--pricing">
+      <div class="section-label">
+        <span class="step-badge">1</span>
+        <h2>Pricing Model</h2>
+      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Select pricing model</mat-label>
+        <select
+          matNativeControl
+          [(ngModel)]="pricingModel"
+          (ngModelChange)="onPricingModelChange()"
+          required>
+          <option [ngValue]="null" disabled>Select pricing model</option>
+          <option value="Zone-based">Zone-based</option>
+          <option value="Mileage-based">Mileage-based</option>
+        </select>
+      </mat-form-field>
+    </section>
+
+    <!-- Step 2: Input Excel File -->
+    <section class="form-section">
+      <div class="section-label">
+        <span class="step-badge">2</span>
+        <h2>Input Excel Template</h2>
+      </div>
+
+      <div class="picker-row">
+        <input
+          #localExcelInput
+          type="file"
+          accept=".xlsx"
+          class="hidden-file-input"
+          (change)="onLocalFileSelected($event)" />
+
+        <button
+          mat-stroked-button
+          class="picker-btn"
+          (click)="openLocalFilePicker(localExcelInput)"
+          [disabled]="validating">
+          <mat-icon>upload_file</mat-icon>
+          Browse Local Drive
+        </button>
+
+        @if (inputFile) {
+          <span class="selected-item">
+            <mat-icon class="file-icon">description</mat-icon>
+            {{ inputFile.name }}
+          </span>
+        } @else {
+          <span class="no-selection">No file selected — pick an .xlsx template</span>
+        }
+
+        @if (validating) {
+          <span class="validating-hint">
+            <mat-icon class="spin">sync</mat-icon> Validating...
+          </span>
+        }
+      </div>
+
+      @if (validationError) {
+        <div class="validation-error" role="alert">
+          <mat-icon>warning_amber</mat-icon>
+          <span>{{ validationError }}</span>
+        </div>
+      }
+
+      @if (validationSuccess) {
+        <div class="validation-success" role="status">
+          <mat-icon>check_circle</mat-icon>
+          <span>{{ validationSuccess }}</span>
+        </div>
+      }
+
+      @if (!validating && validationDurationMs !== null && (validationSuccess || validationError)) {
+        <p class="validation-metric">Validated in {{ validationDurationMs }} ms</p>
+      }
+
+      @if (validationSlowWarning) {
+        <p class="validation-slow-warning">
+          <mat-icon>schedule</mat-icon>
+          {{ validationSlowWarning }}
+        </p>
+      }
+
+    </section>
+
+    <!-- Step 3: Output Location -->
+    <section class="form-section">
+      <div class="section-label">
+        <span class="step-badge">3</span>
+        <h2>Output Location</h2>
+      </div>
+
+      <div class="picker-row output-folder-row">
+        <button mat-stroked-button class="picker-btn" (click)="openFolderBrowser()">
+          <mat-icon>folder_open</mat-icon>
+          Browse Output Folder
+        </button>
+
+        <span class="selected-item selected-item--folder">
+          <mat-icon class="file-icon">folder</mat-icon>
+          {{ outputFolderDisplayPath }}
+        </span>
+      </div>
+        <mat-form-field appearance="outline" class="full-width output-path-field" style="margin-top: 12px;">
+          <mat-label>Or enter folder path manually</mat-label>
+          <input
+            matInput
+            [(ngModel)]="outputDirPath"
+            placeholder="C:\path\to\output\folder"
+            title="Enter the full path to the output folder" />
+          <mat-icon matSuffix>folder_open</mat-icon>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width output-name-field">
+        <mat-label>Output filename</mat-label>
+        <input
+          matInput
+          [(ngModel)]="outputFileName"
+          placeholder="Contract_Customer_YYYYMMDD.docx"
+          required />
+        <mat-icon matSuffix>insert_drive_file</mat-icon>
+      </mat-form-field>
+    </section>
+
+    <!-- Submit -->
+    <section class="submit-section">
+      <button
+        mat-raised-button
+        class="submit-btn"
+        (click)="submit()"
+        [disabled]="!canSubmit">
+        @if (submitting) {
+          <span class="btn-content">
+            <mat-icon class="spin">sync</mat-icon>
+            <span>Submitting...</span>
+          </span>
+        } @else {
+          <span class="btn-content">
+            <mat-icon>send</mat-icon>
+            <span>Generate Contract</span>
+          </span>
+        }
+      </button>
+    </section>
+
+    <!-- Status Panel -->
+    @if (currentRequest) {
+      <section class="status-panel" aria-live="polite">
+        <h2 class="status-heading">
+          <mat-icon>info_outline</mat-icon> Job Status
+        </h2>
+
+        <div class="status-row">
+          <span class="status-badge status-{{ currentRequest.status.toLowerCase() }}">
+            {{ currentRequest.status }}
+          </span>
+          <span class="status-caption">Manual generation lane</span>
+        </div>
+
+        <!-- Progress bar: indeterminate while running, determinate on completion -->
+        @if (currentRequest.status === 'Completed' || currentRequest.status === 'Failed') {
+          <mat-progress-bar
+            class="progress-bar"
+            mode="determinate"
+            [value]="currentRequest.status === 'Completed' ? 100 : currentRequest.progress">
+          </mat-progress-bar>
+        } @else {
+          <mat-progress-bar
+            class="progress-bar progress-bar--animated"
+            mode="indeterminate">
+          </mat-progress-bar>
+          <p class="poll-hint">
+            <mat-icon>schedule</mat-icon>
+            Checking status every 15 seconds&hellip;
+          </p>
+        }
+
+        @if (currentRequest.message) {
+          <p class="status-message">{{ currentRequest.message }}</p>
+        }
+
+        <!-- Success block -->
+        @if (currentRequest.status === 'Completed' && currentRequest.outputPath) {
+          <div class="success-block">
+            <div class="success-header">
+              <mat-icon class="success-icon">check_circle</mat-icon>
+              <span>Document successfully generated!</span>
+            </div>
+            <p class="success-path">{{ currentRequest.outputPath }}</p>
+            <button mat-raised-button class="open-doc-btn" (click)="openDocument()">
+              <mat-icon>open_in_new</mat-icon>
+              Open Document
+            </button>
+          </div>
+        }
+      </section>
+    }
+
+  </main>
+</div>
